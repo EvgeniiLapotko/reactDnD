@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/Navbar';
+import ConstructorBLockNew from './components/ConstructorBLockNew';
+import styled from 'styled-components';
+import ConstructorBLock from './components/ConstructorBLock';
+import State from './mobx/mobx';
+import { DragDropContext } from 'react-beautiful-dnd';
+
+const myState = new State();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ height: '100vh', overflow: 'hidden' }}>
+      <AppBody>
+        <DragDropContext>
+          <Navbar state={myState} />
+          <ConstructorBLockNew state={myState} />
+        </DragDropContext>
+      </AppBody>
     </div>
   );
 }
+
+const AppBody = styled.div`
+  display: flex;
+  height: 100vh;
+`;
 
 export default App;
