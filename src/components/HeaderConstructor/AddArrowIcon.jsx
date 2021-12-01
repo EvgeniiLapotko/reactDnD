@@ -57,7 +57,7 @@ const AddArrowIcon = observer(({ state }) => {
                     <option>select to</option>
                     {Object.keys(state.frames)?.map((item, i) => {
                       if (frame1 === item) {
-                        return;
+                        return <></>;
                       }
                       return (
                         <option value={item} key={item + 1}>

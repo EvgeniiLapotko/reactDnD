@@ -28,11 +28,10 @@ const Navbar = observer(({ state }) => {
       </NavbarSearchContainer>
       <h3 style={{ textAlign: 'center', margin: '7px' }}>Components</h3>
       <NavbarListContainer>
-        {state.filterList?.map((item) => {
-          if (item.components.length !== 0) {
-            return <NavbarListBlock item={item} key={item.id} />;
-          }
-        })}
+        {state.filterList?.map((item) =>
+          item.components.length !== 0 ? <NavbarListBlock item={item} key={item.id} /> : ''
+        )}
+        )}
       </NavbarListContainer>
     </NavbarContainer>
   );

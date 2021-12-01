@@ -67,6 +67,7 @@ class State {
           if (j.id === draggableId) {
             component = j.component;
           }
+          return null;
         })
       );
       this.frames[destination.droppableId].push({ component: component, id: uuidv4() });

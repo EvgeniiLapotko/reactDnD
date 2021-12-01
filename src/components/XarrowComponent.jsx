@@ -14,22 +14,22 @@ const XarrowComponent = observer(({ state }) => {
 
   return (
     <>
-      {state.lines.length
-        ? state.lines.map((line) => {
-            if (line.end && line.start) {
-              return (
-                <Xarrow
-                  {...attrs}
-                  start={line.start}
-                  end={line.end}
-                  labels={{
-                    middle: line.label ? <LabelBlock>{line.label}</LabelBlock> : '',
-                  }}
-                />
-              );
-            }
-          })
-        : null}
+      {state.lines.length &&
+        state.lines.map((line) => {
+          if (line.end && line.start) {
+            return (
+              <Xarrow
+                {...attrs}
+                start={line.start}
+                end={line.end}
+                labels={{
+                  middle: line.label ? <LabelBlock>{line.label}</LabelBlock> : '',
+                }}
+              />
+            );
+          }
+          return null;
+        })}
     </>
   );
 });
