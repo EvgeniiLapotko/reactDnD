@@ -47,6 +47,7 @@ const NavbarContainer = styled.div`
   border-top: 1px solid #5c5c5c;
   transition: all 0.4s;
   box-sizing: border-box;
+  z-index: 30;
   hr {
     margin: 0 5px;
     opacity: 0.3;

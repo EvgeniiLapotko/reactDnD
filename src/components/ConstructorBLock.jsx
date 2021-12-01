@@ -39,6 +39,7 @@ const ConstructorContainer = styled.div`
   flex: 0.7;
   flex-grow: 1;
   box-sizing: border-box;
+  z-index: 0;
 `;
 const ConstructorBlock = styled.div`
   height: calc(100vh - 70px);

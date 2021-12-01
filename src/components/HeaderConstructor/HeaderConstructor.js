@@ -44,6 +44,8 @@ const HeaderConstructorBlock = styled.div`
   border-left: 1px solid #5c5c5c;
   height: 70px;
   background-color: #2c2c2c;
+  z-index: 30;
+  position: sticky;
 `;
 
 const IconBlockItem = styled.div`
