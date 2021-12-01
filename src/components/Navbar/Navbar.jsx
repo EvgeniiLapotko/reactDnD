@@ -10,15 +10,14 @@ const Navbar = observer(({ state }) => {
   const [value, setValue] = useState('');
   const handleChange = (e) => {
     setValue(e.target.value);
-    state.filterComponents(value);
+    state.filterComponents(e.target.value);
   };
   return (
     <NavbarContainer>
       <HeaderContainer>
         <HeaderUser>
-          <HeaderAvatar />
+          <Avatar src='https://source.unsplash.com/random/150x150?8' />
         </HeaderUser>
-
         <ExitToAppIcon />
       </HeaderContainer>
       <NavbarSearchContainer>
@@ -27,14 +26,14 @@ const Navbar = observer(({ state }) => {
           <input type='text' placeholder='Search' value={value} onChange={handleChange} />
         </NavbarSearch>
       </NavbarSearchContainer>
-      <div>
-        <h3 style={{ textAlign: 'center', margin: '7px' }}>Components</h3>
-        <NavbarListContainer>
-          {state.filterList?.map((item) => {
+      <h3 style={{ textAlign: 'center', margin: '7px' }}>Components</h3>
+      <NavbarListContainer>
+        {state.filterList?.map((item) => {
+          if (item.components.length !== 0) {
             return <NavbarListBlock item={item} key={item.id} />;
-          })}
-        </NavbarListContainer>
-      </div>
+          }
+        })}
+      </NavbarListContainer>
     </NavbarContainer>
   );
 });
@@ -72,8 +71,6 @@ const HeaderUser = styled.div`
   padding-right: 13px;
   align-items: center;
 `;
-
-const HeaderAvatar = styled(Avatar)``;
 
 const NavbarSearchContainer = styled.div`
   border-bottom: 1px solid #5c5c5c;

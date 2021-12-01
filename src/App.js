@@ -1,7 +1,6 @@
-import Navbar from './components/Navbar';
-import ConstructorBLockNew from './components/ConstructorBLockNew';
-import styled from 'styled-components';
+import Navbar from './components/Navbar/Navbar';
 import ConstructorBLock from './components/ConstructorBLock';
+import styled from 'styled-components';
 import State from './mobx/mobx';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -11,9 +10,9 @@ function App() {
   return (
     <div style={{ height: '100vh', overflow: 'hidden' }}>
       <AppBody>
-        <DragDropContext>
+        <DragDropContext onDragEnd={myState.dragEnd}>
           <Navbar state={myState} />
-          <ConstructorBLockNew state={myState} />
+          <ConstructorBLock state={myState} />
         </DragDropContext>
       </AppBody>
     </div>

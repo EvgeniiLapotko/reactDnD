@@ -17,7 +17,7 @@ const NavbarListBlock = ({ item }) => {
       <Droppable droppableId='navbar' isDropDisabled={true}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-            {item.components.map((i, id) => {
+            {item.components?.map((i, id) => {
               return viewComponent ? (
                 <Draggable key={i.id} draggableId={i.id} index={id}>
                   {(provided, snapshot) => (

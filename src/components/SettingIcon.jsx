@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClickAwayListener, IconButton, Tooltip } from '@mui/material';
+import { ClickAwayListener, Tooltip } from '@mui/material';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import DeleteIcon from '@mui/icons-material/HighlightOff';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -44,9 +44,11 @@ function SettingIcon({ state, idFrame }) {
               </TooltipBlock>
             }
           >
-            <IconButton onClick={handleTooltipOpen}>
-              <SettingsIcon fontSize='small' />
-            </IconButton>
+            <SettingsIcon
+              fontSize='small'
+              onClick={handleTooltipOpen}
+              style={{ color: '#aaa', cursor: 'pointer' }}
+            />
           </Tooltip>
         </div>
       </ClickAwayListener>

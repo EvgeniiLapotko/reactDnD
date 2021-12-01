@@ -4,7 +4,7 @@ import { Rnd } from 'react-rnd';
 import SettingIcon from './SettingIcon';
 import { observer } from 'mobx-react-lite';
 import { useXarrow } from 'react-xarrows';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { Droppable } from 'react-beautiful-dnd';
 
 const Frame = observer(({ state, idFrame, height, width, globalWidth, globalHeight, index }) => {
   const [widthFrame, setWidthFrame] = React.useState(width);
@@ -30,25 +30,36 @@ const Frame = observer(({ state, idFrame, height, width, globalWidth, globalHeig
     onClick: (e) => state.getActiveFrame(e, idFrame),
     onDrag: () => updateXarrow(),
     onDragStop: () => updateXarrow(),
+    style: idFrame === state.activeFrame ? { zIndex: 10 } : { zIndex: 0 },
   };
 
   return (
-    <Rnd {...attrs} style={idFrame === state.activeFrame?.id ? { zIndex: 10 } : { zIndex: 0 }}>
-      <Droppable droppableId={`frame#${index}`}>
+    <Rnd {...attrs}>
+      <Droppable droppableId={idFrame}>
         {(provided) => (
-          <FrameBox
-            active={idFrame === state.activeFrame?.id}
+          <FrameContainer
+            active={idFrame === state.activeFrame}
             id={idFrame}
-            {...provided.droppableProps}
             ref={provided.innerRef}
+            style={{ ...provided.droppableProps.style }}
           >
             <FrameName>Frame #{index + 1}</FrameName>
             <SettingIcon state={state} idFrame={idFrame} />
             <SizesBox view={viewSize}>
               <span>{widthFrame}</span>x<span>{heightFrame}</span>
             </SizesBox>
+            <FrameBox>
+              {state.frames[idFrame].length
+                ? state.frames[idFrame].map((i, index) => (
+                    <FrameBoxComponent>
+                      <SettingIcon state={state} idFrame={idFrame} />
+                      <div>{i.component}</div>
+                    </FrameBoxComponent>
+                  ))
+                : ''}
+            </FrameBox>
             {provided.placeholder}
-          </FrameBox>
+          </FrameContainer>
         )}
       </Droppable>
     </Rnd>
@@ -62,14 +73,34 @@ const FrameName = styled.div`
   top: -20px;
   left: 0;
 `;
+
 const FrameBox = styled.div`
+  border: 1px solid #ddd;
   width: 100%;
+  padding: 5px;
+  height: 100%;
+  outline: none;
+  box-sizing: border-box;
+`;
+
+const FrameBoxComponent = styled.div`
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+  z-index: 30;
+`;
+
+const FrameContainer = styled.div`
   height: 100%;
   position: relative;
   background-color: #fff;
   border: 1px solid grey;
   border-radius: 5px;
   z-index: 0;
+  padding: 20px 10px 10px;
+  box-sizing: border-box;
   border: ${({ active }) => (active ? '2px solid skyblue' : '1px solid grey')};
 `;
 

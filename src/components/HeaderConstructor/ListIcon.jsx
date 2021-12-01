@@ -8,14 +8,14 @@ const ListIcon = observer(({ state }) => {
   const tooltipContent = () => {
     return (
       <TooltipBlock>
-        {state.frames.length === 0 ? (
+        {Object.keys(state.frames).length === 0 ? (
           <h3>Add Frames</h3>
         ) : (
-          state.frames.map((item, index) => {
+          Object.keys(state.frames).map((item, index) => {
             return (
               <TooltipRow
-                active={item.id === state.activeFrame.id}
-                onClick={(e) => state.getActiveFrame(e, item.id)}
+                active={item === state.activeFrame}
+                onClick={(e) => state.getActiveFrame(e, item)}
               >
                 <span>Frame #{index + 1}</span>
               </TooltipRow>

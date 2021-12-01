@@ -1,16 +1,11 @@
 import { makeAutoObservable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
-import { componetsList } from '../components/componentList';
+import { componetsList } from '../componentList';
 
 class State {
-  // frames = [];
-  componentsList = componetsList;
   filterList = componetsList;
-  defaultWidth = 340;
-  defaultHeight = 600;
   activeFrame = {};
   lines = [];
-
   frames = {};
 
   constructor() {
@@ -20,49 +15,68 @@ class State {
   filterComponents = (value) => {
     if (!value) {
       this.filterList = componetsList;
+      return;
     }
-    const filterArr = this.componentsList.filter(
-      (item) =>
-        item.components.filter((item) =>
-          item.component.toLowerCase().includes(value.toLowerCase())
-        ) > -1
-    );
-    // this.filterList = filterArr;
+
+    for (let list of this.filterList) {
+      const filterArr = list.components.filter((i) =>
+        i.component.toLowerCase().includes(value.toLowerCase())
+      );
+      list.components = filterArr;
+    }
   };
 
-  // createFrame = () => {
-  //   let { frames, defaultWidth, defaultHeight } = this;
-  //   let newFrame = { id: uuidv4(), width: defaultWidth, height: defaultHeight };
-  //   frames.push(newFrame);
-  // };
-
   createFrame = () => {
-    this.frames = { [uuidv4()]: [] };
+    const idFrame = uuidv4();
+    this.frames = { ...this.frames, [idFrame]: [] };
   };
 
   addFrame = (w, h) => {
-    let { frames } = this;
-    frames.push({ id: uuidv4(), width: w, height: h });
+    const idFrame = uuidv4();
+    this.frames = { ...this.frames, [idFrame]: [] };
   };
 
   deleteFrame = (id) => {
-    let { frames } = this;
-    const filterArr = frames.filter((frame) => frame.id !== id);
-    this.frames = filterArr;
+    delete this.frames[id];
+    this.lines = this.lines.filter((i) => i.start !== id);
+    this.lines = this.lines.filter((i) => i.end !== id);
   };
 
   getActiveFrame = (e, idFrame) => {
     let active;
-    this.frames.map((i) => (i.id === idFrame ? (active = i) : ''));
+    Object.keys(this.frames).map((i) => (i === idFrame ? (active = i) : ''));
     this.activeFrame = active;
   };
 
-  addComponent = (componentUi) => {
-    this.frames.map((i) => i.id === this.activeFrame.id && { ...i, offspring: [{ componentUi }] });
-  };
   addArrow(start, end, label) {
     this.lines.push({ start: start, end: end, label: label });
   }
+
+  dragEnd = (result) => {
+    const { source, destination, draggableId } = result;
+
+    // dropped outside the list
+    if (!destination) {
+      return;
+    }
+
+    if (destination.droppableId !== source.droppableId) {
+      let component;
+      componetsList.map((i) =>
+        i.components.map((j) => {
+          if (j.id === draggableId) {
+            component = j.component;
+          }
+        })
+      );
+      this.frames[destination.droppableId].push({ component: component, id: uuidv4() });
+    }
+
+    if (destination.droppableId === source.droppableId) {
+    }
+
+    console.log('drag end');
+  };
 }
 
 export default State;

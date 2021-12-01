@@ -26,33 +26,25 @@ const AddArrowIcon = observer(({ state }) => {
     setFrame2(event.target.value);
   };
 
-  const toltipContent = () => {
+  const tooltipContent = () => {
     return (
       <TooltipBlock>
         <TooltipRow>
           <span>Add Arrow</span>
           <DeleteIcon fontSize='small' onClick={handleTooltipClose} />
         </TooltipRow>
-        {state.frames.length < 2 ? (
+        {Object.keys(state.frames).length < 2 ? (
           <h4>Add min 2 frames</h4>
         ) : (
           <>
             <form>
               <FormInner>
                 <FormItem>
-                  {/*<label id='standard-label-from'>From</label>*/}
-                  <FormSelect
-                    labelId='standard-label-from'
-                    id='select-from'
-                    value={frame1}
-                    label='From'
-                    onChange={handleChange}
-                    placeholder='From'
-                  >
+                  <FormSelect id='select-from' value={frame1} onChange={handleChange}>
                     <option>select from</option>
-                    {state.frames?.map((item, i) => {
+                    {Object.keys(state.frames)?.map((item, i) => {
                       return (
-                        <option value={item.id} key={item.id}>
+                        <option value={item} key={item}>
                           Frame #{i + 1}
                         </option>
                       );
@@ -61,22 +53,14 @@ const AddArrowIcon = observer(({ state }) => {
                 </FormItem>
                 <FormItemIcon></FormItemIcon>
                 <FormItem>
-                  {/*<label id='label-to'>To</label>*/}
-                  <FormSelect
-                    labelId='label-to'
-                    id='label-to'
-                    value={frame2}
-                    label='To'
-                    placeholder='To'
-                    onChange={handleChange2}
-                  >
+                  <FormSelect id='label-to' value={frame2} onChange={handleChange2}>
                     <option>select to</option>
-                    {state.frames?.map((item, i) => {
-                      if (frame1 === item.id) {
+                    {Object.keys(state.frames)?.map((item, i) => {
+                      if (frame1 === item) {
                         return;
                       }
                       return (
-                        <option value={item.id} key={item.id + 1}>
+                        <option value={item} key={item + 1}>
                           Frame #{i + 1}
                         </option>
                       );
@@ -118,7 +102,7 @@ const AddArrowIcon = observer(({ state }) => {
       disableFocusListener
       disableHoverListener
       disableTouchListener
-      title={toltipContent()}
+      title={tooltipContent()}
     >
       <IconButton style={{ color: '#fff' }} onClick={handleTooltipOpen}>
         <CompareArrowsIcon fontSize='large' style={{ fill: '#ddd' }} />

@@ -3,28 +3,28 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
 const NavbarList = observer(({ component, provided, snapshot }) => {
+  const attrs = {
+    ref: provided.innerRef,
+    isDragging: snapshot.isDragging,
+    drag: snapshot.isDragging,
+    style: {
+      ...provided.draggableProps.style,
+      transform: snapshot.isDragging
+        ? provided.draggableProps.style?.transform
+        : 'translate(0px, 0px)',
+    },
+  };
+
   return (
     <>
-      <NavbarListContainer
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        ref={provided.innerRef}
-        isDragging={snapshot.isDragging}
-        drag={snapshot.isDragging}
-        style={{
-          ...provided.draggableProps.style,
-          transform: snapshot.isDragging
-            ? provided.draggableProps.style?.transform
-            : 'translate(0px, 0px)',
-        }}
-      >
+      <NavbarListContainer {...attrs} {...provided.draggableProps} {...provided.dragHandleProps}>
         <NavbarListTitle>
           <span>#</span>
           <h3>{component}</h3>
         </NavbarListTitle>
       </NavbarListContainer>
       {snapshot.isDragging && (
-        <NavbarListContainer style={{ transform: 'none !important' }}>
+        <NavbarListContainer>
           <NavbarListTitle>
             <span>#</span>
             <h3>{component}</h3>

@@ -15,23 +15,22 @@ const HeaderConstructor = observer(({ state }) => {
       <IconBlock>
         <IconBlockItem>
           <Tooltip title='Create'>
-            <IconButton style={{ color: '#fff' }} onClick={() => state.createFrame()}>
+            <IconButton onClick={() => state.createFrame()}>
               <CreateIcon fontSize='large' style={{ fill: '#ddd' }} />
             </IconButton>
           </Tooltip>
           <FrameIcon addFrame={state.addFrame} />
           <ListIcon state={state} />
-
           <Tooltip title='Create Component'>
-            <IconButton style={{ color: '#fff' }}>
-              <GridViewIcon fontSize='large' style={{ fill: '#ddd', transform: 'rotate(90deg)' }} />
+            <IconButton>
+              <GridViewIcon fontSize='large' style={{ fill: '#ddd' }} />
             </IconButton>
           </Tooltip>
           <AddArrowIcon state={state} />
         </IconBlockItem>
 
         <Tooltip title='More'>
-          <IconButton style={{ color: '#fff' }}>
+          <IconButton>
             <MoreVertIcon fontSize='large' style={{ fill: '#ddd' }} />
           </IconButton>
         </Tooltip>
